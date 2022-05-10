@@ -5,7 +5,7 @@ import com.ruyuan.eshop.common.exception.BaseErrorCodeEnum;
 
 /**
  * 库存服务自定义业务异常
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class InventoryBizException extends BaseBizException {

@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * rocketmq的配置信息
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "rocketmq")

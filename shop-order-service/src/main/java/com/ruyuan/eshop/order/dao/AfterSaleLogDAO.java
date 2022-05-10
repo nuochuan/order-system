@@ -14,7 +14,7 @@ import java.util.List;
  * 售后单变更表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class AfterSaleLogDAO extends BaseDAO<AfterSaleLogMapper, AfterSaleLogDO> {

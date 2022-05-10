@@ -3,7 +3,7 @@ package com.ruyuan.eshop.pay.constants;
 /**
  * 支付方式
  *
- * @author Noel
+ * @author Noah
  */
 public class PayType {
 

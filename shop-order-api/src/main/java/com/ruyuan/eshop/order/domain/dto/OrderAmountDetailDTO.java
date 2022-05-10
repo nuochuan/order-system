@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 订单费用明细表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class OrderAmountDetailDTO extends AbstractObject implements Serializable {

@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.constants;
 /**
  * RocketMQ 常量类
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class RocketMqConstant {

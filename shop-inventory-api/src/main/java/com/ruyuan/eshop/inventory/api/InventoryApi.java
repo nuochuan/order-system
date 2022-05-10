@@ -6,7 +6,7 @@ import com.ruyuan.eshop.inventory.domain.request.LockProductStockRequest;
 import com.ruyuan.eshop.inventory.domain.request.ReleaseProductStockRequest;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface InventoryApi {

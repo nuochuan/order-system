@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * 日期json序列化
  *
- * @author Noel
+ * @author Noah
  */
 public class DateJsonSerializer extends JsonSerializer<Date> {
 

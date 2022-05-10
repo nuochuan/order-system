@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.*;
  * 用户优惠券记录表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface CouponMapper extends BaseMapper<CouponDO> {

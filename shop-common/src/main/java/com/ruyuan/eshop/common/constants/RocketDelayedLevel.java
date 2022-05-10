@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.constants;
 /**
  * RocketMQ 延迟等级
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class RocketDelayedLevel {

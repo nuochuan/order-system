@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 商品sku记录表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("product_sku")

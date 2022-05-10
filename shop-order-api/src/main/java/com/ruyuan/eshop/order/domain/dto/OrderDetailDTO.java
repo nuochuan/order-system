@@ -10,7 +10,7 @@ import java.util.Map;
  *  订单详情DTO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class OrderDetailDTO {

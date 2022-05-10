@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum CustomerAuditResult {

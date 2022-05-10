@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * DO数据对象删除状态 0:未删除  1:已删除
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum DeleteStatusEnum {

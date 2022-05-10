@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 统一的Spring mvc响应结果封装对象
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Slf4j

@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 用户优惠券信息
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class UserCouponDTO extends AbstractObject implements Serializable {

@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * java.util.Date日期格式化工具类
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class DateFormatUtil {

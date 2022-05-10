@@ -3,7 +3,7 @@ package com.ruyuan.eshop.market.message;
 import lombok.Data;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

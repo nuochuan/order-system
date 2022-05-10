@@ -22,7 +22,7 @@ import java.util.List;
  * Swagger UI配置
  * </p>
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Configuration
@@ -55,7 +55,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("shop商城")
                 .description("shop-pay会员服务接口文档")
-                .contact(new Contact("Noel", "https://www.ruyaun2020.cn", "Noel@demo.com"))
+                .contact(new Contact("Noah", "https://www.ruyaun2020.cn", "Noah@demo.com"))
                 .version("v1.0")
                 .build();
     }

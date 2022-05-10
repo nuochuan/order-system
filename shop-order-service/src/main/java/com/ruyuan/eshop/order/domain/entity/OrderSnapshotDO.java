@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 订单快照表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("order_snapshot")

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 接入方业务线枚举
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum BusinessIdentifierEnum {

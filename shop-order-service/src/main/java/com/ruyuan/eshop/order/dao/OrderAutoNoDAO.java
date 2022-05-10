@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * 订单编号表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class OrderAutoNoDAO extends BaseDAO<OrderAutoNoMapper, OrderAutoNoDO>  {

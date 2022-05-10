@@ -12,7 +12,7 @@ import java.util.Date;
  * 订单售后表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("after_sale_info")

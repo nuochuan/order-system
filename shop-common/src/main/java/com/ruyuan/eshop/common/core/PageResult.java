@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 统一的分页返回对象
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class PageResult<T> implements Serializable {

@@ -11,7 +11,7 @@ import java.util.Date;
  * 订单售后DTO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class AfterSaleInfoDTO extends AbstractObject implements Serializable {

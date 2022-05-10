@@ -7,7 +7,7 @@ import com.ruyuan.eshop.common.core.JsonResult;
 /**
  * 地址服务业务接口
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface AddressApi {

@@ -15,7 +15,7 @@ import java.util.List;
  *  售后单详情构造器
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 public class AfterSaleOrderDetailBuilder {
 

@@ -22,7 +22,7 @@ import java.util.TimeZone;
 /**
  * 自定义ObjectMapper组件实现
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class ObjectMapperImpl extends ObjectMapper {

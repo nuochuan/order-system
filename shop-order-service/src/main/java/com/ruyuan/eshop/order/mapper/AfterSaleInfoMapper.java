@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface AfterSaleInfoMapper extends BaseMapper<AfterSaleInfoDO> {

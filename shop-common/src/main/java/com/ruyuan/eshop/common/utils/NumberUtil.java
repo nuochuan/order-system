@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.utils;
 /**
  * 数字处理工具类
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class NumberUtil {

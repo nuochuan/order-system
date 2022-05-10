@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * 商品类型枚举
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum ProductTypeEnum {

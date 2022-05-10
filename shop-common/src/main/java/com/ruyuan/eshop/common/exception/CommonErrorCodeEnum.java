@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.exception;
 /**
  * 系统通用的业务异常错误码枚举
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum CommonErrorCodeEnum implements BaseErrorCodeEnum {

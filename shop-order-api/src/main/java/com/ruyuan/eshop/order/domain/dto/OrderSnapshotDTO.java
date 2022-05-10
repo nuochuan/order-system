@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 订单快照DTO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class OrderSnapshotDTO extends AbstractObject implements Serializable {

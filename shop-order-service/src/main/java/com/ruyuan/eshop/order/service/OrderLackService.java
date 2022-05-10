@@ -7,7 +7,7 @@ import com.ruyuan.eshop.order.exception.OrderBizException;
 
 /**
  * 订单缺品相关service
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface OrderLackService {

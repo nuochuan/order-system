@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 订单编号表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("order_auto_no")

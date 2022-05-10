@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 售后单变更表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface AfterSaleLogMapper extends BaseMapper<AfterSaleLogDO> {

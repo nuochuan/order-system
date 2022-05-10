@@ -3,7 +3,7 @@ package com.ruyuan.eshop.pay.constants;
 /**
  * 支付交易状态
  *
- * @author Noel
+ * @author Noah
  */
 public class PayTransactionStatus {
 

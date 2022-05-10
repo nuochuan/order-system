@@ -5,7 +5,7 @@ package com.ruyuan.eshop.order.constants;
  * 订单相关的常量
  * </p>
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface OrderConstants {

@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.constants;
 /**
  * 框架核心的一些常量定义
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class CoreConstant {

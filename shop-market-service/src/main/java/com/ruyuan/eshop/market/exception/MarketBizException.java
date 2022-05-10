@@ -4,7 +4,7 @@ import com.ruyuan.eshop.common.exception.BaseBizException;
 import com.ruyuan.eshop.common.exception.BaseErrorCodeEnum;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class MarketBizException extends BaseBizException {

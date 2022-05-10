@@ -9,7 +9,7 @@ import com.ruyuan.eshop.order.domain.query.AfterSaleQuery;
 /**
  * 订单中心-售后查询业务接口
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface AfterSaleQueryApi {

@@ -14,7 +14,7 @@ import java.util.List;
  * 订单售后条目表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class AfterSaleItemDAO extends BaseDAO<AfterSaleItemMapper, AfterSaleItemDO> {

@@ -10,7 +10,7 @@ import java.util.List;
  *  售后单详情DTO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class AfterSaleOrderDetailDTO implements Serializable {

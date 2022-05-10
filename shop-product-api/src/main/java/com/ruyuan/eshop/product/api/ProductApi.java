@@ -5,7 +5,7 @@ import com.ruyuan.eshop.product.domain.dto.ProductSkuDTO;
 import com.ruyuan.eshop.product.domain.query.ProductSkuQuery;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface ProductApi {

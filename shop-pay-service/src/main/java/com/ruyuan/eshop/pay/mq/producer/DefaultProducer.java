@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 默认的普通的mq消息生产者（只能发普通消息，不能发事务消息）
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Component

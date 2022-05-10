@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.constants;
 /**
  * 集合大小常量类
  *
- * @author Noel
+ * @author Noah
  */
 public class CollectionSize {
 

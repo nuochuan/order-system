@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  * 营销管理service组件
- * @author Noel
+ * @author Noah
  *
  */
 @Service

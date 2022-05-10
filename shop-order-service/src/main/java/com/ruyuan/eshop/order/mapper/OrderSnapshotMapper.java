@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 订单快照表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface OrderSnapshotMapper extends BaseMapper<OrderSnapshotDO> {

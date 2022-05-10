@@ -14,7 +14,7 @@ import java.util.Date;
  * 售后单变更表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("after_sale_log")

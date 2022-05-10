@@ -5,7 +5,7 @@ package com.ruyuan.eshop.common.constants;
  * redis 分布式锁key
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 public class RedisLockKeyConstants {
 

@@ -4,7 +4,7 @@ import com.ruyuan.eshop.common.core.JsonResult;
 import com.ruyuan.eshop.customer.domain.request.CustomerReviewReturnGoodsRequest;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface CustomerService {

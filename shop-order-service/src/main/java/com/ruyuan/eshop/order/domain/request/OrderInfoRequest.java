@@ -1,7 +1,7 @@
 package com.ruyuan.eshop.order.domain.request;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class OrderInfoRequest {

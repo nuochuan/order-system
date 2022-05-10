@@ -14,7 +14,7 @@ import java.util.List;
  *     售后查询service
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 public interface AfterSaleQueryService {
 

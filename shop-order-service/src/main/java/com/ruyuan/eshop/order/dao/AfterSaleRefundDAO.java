@@ -14,7 +14,7 @@ import java.util.List;
  * 售后支付表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class AfterSaleRefundDAO extends BaseDAO<AfterSaleRefundMapper, AfterSaleRefundDO> {

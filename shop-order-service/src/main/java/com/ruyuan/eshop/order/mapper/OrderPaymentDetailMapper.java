@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
  * 订单支付明细表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface OrderPaymentDetailMapper extends BaseMapper<OrderPaymentDetailDO> {

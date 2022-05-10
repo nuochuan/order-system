@@ -1,7 +1,7 @@
 package com.ruyuan.eshop.pay.service;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface PayService {

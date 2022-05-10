@@ -16,7 +16,7 @@ import java.util.List;
  * 订单支付明细表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class OrderPaymentDetailDAO extends BaseDAO<OrderPaymentDetailMapper, OrderPaymentDetailDO> {

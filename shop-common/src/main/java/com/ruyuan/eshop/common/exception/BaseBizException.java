@@ -5,7 +5,7 @@ import java.text.MessageFormat;
 /**
  * 基础自定义业务异常
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class BaseBizException extends RuntimeException {

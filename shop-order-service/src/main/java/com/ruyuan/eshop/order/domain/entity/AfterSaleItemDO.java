@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 订单售后详情表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("after_sale_item")

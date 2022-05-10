@@ -12,7 +12,7 @@ import java.util.Date;
  * 订单配送信息DTO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class OrderDeliveryDetailDTO extends AbstractObject implements Serializable {

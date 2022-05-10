@@ -7,7 +7,7 @@ import com.ruyuan.eshop.market.domain.request.CalculateOrderAmountRequest;
 
 /**
  * 营销管理service接口
- * @author Noel
+ * @author Noah
  *
  */
 public interface MarketService {

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  *
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 public class RedisCache {
 

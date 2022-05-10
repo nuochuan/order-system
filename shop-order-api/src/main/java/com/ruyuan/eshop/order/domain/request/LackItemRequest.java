@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**
  * 具体的缺品项
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

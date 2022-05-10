@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * 订单完成支付消息
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

@@ -5,7 +5,7 @@ import com.ruyuan.eshop.common.exception.BaseErrorCodeEnum;
 
 /**
  * 订单中心自定义业务异常类
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class OrderBizException extends BaseBizException {

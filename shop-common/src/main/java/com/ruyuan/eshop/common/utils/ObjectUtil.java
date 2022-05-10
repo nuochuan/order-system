@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 /**
  * 对象克隆工具类
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class ObjectUtil {

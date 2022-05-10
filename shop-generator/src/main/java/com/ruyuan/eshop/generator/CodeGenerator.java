@@ -22,7 +22,7 @@ import java.util.Scanner;
  */
 public class CodeGenerator {
 
-    private final static String author = "Noel";
+    private final static String author = "Noah";
 
     /**
      * mapper后缀名

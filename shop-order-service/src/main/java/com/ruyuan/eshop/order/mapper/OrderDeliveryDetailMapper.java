@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 订单配送信息表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface OrderDeliveryDetailMapper extends BaseMapper<OrderDeliveryDetailDO> {

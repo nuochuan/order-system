@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * 发表评论状态枚举
- * @author Noel
+ * @author Noah
  */
 public enum CommentStatusEnum {
 

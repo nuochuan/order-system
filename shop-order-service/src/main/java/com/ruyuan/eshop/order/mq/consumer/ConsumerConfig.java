@@ -13,7 +13,7 @@ import static com.ruyuan.eshop.common.constants.RocketMqConstant.*;
 import static com.ruyuan.eshop.common.constants.RocketMqConstant.ACTUAL_REFUND_TOPIC;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Configuration

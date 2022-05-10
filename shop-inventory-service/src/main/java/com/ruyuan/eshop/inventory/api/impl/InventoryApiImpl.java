@@ -11,7 +11,7 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @DubboService(version = "1.0.0", interfaceClass = InventoryApi.class, retries = 0)

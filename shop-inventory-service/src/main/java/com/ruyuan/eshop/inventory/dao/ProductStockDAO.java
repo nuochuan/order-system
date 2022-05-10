@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * 库存中心的商品库存表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class ProductStockDAO extends BaseDAO<ProductStockMapper, ProductStockDO> {

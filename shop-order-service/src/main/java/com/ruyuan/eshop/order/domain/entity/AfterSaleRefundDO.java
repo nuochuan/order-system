@@ -12,7 +12,7 @@ import java.util.Date;
  * 售后退款单表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("after_sale_refund")

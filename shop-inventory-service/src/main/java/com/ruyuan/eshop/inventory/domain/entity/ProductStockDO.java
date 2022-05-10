@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 库存中心的商品库存表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("inventory_product_stock")

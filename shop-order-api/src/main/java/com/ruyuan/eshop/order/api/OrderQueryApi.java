@@ -8,7 +8,7 @@ import com.ruyuan.eshop.order.domain.query.OrderQuery;
 /**
  * 订单中心-订单查询业务接口
  *
- * @author Noel
+ * @author Noah
  */
 public interface OrderQueryApi {
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 优惠券管理controller组件
- * @author Noel
+ * @author Noah
  *
  */
 @RestController

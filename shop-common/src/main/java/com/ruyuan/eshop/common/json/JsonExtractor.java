@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * json字段值提取器
  *
- * @author Noel
+ * @author Noah
  */
 public class JsonExtractor {
 

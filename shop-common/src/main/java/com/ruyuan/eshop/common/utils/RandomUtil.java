@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.utils;
 import java.util.Random;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class RandomUtil {

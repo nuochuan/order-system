@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class AfterSaleQuery extends AbstractObject implements Serializable {

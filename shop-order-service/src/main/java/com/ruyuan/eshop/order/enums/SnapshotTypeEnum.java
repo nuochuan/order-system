@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * 快照类型
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum SnapshotTypeEnum {

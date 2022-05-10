@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Select;
  *
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface OrderInfoMapper extends BaseMapper<OrderInfoDO> {

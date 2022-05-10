@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 优惠券领取记录管理DAO组件
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class CouponDAO extends BaseDAO<CouponMapper, CouponDO> {

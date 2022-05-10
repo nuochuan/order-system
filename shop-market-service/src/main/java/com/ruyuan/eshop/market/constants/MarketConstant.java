@@ -2,7 +2,7 @@ package com.ruyuan.eshop.market.constants;
 
 /**
  * 营销中心常量类
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class MarketConstant {

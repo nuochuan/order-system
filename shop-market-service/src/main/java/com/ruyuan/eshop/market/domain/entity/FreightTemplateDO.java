@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 运费模板
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("market_freight_template")

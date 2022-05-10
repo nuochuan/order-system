@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 优惠券配置表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("market_coupon_config")

@@ -10,7 +10,7 @@ import com.ruyuan.eshop.order.domain.query.OrderQuery;
  *     订单查询service
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 public interface OrderQueryService {
 

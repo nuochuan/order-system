@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.constants;
 /**
  * 文件路径类型
  *
- * @author Noel
+ * @author Noah
  */
 public class PathType {
 

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 售后单变更表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class AfterSaleLogDTO extends AbstractObject implements Serializable {

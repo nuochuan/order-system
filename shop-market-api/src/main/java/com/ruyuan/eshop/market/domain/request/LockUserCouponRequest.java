@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * 锁定使用优惠券入参
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

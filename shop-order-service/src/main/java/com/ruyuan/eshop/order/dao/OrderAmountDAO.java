@@ -13,7 +13,7 @@ import java.util.List;
  * 订单价格表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class OrderAmountDAO extends BaseDAO<OrderAmountMapper, OrderAmountDO> {

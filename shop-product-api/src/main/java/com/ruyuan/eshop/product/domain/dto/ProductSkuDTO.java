@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 商品sku信息
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class ProductSkuDTO extends AbstractObject implements Serializable {

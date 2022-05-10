@@ -9,7 +9,7 @@ import java.util.List;
  *     分页查询结果
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class PagingInfo<T>  {

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 商品中心-商品信息
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Slf4j

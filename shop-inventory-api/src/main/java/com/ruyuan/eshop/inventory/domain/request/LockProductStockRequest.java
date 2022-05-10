@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 锁定商品库存入参
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

@@ -10,7 +10,7 @@ import java.util.Date;
  *     物流配送结果请求
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class WmsShipDTO {

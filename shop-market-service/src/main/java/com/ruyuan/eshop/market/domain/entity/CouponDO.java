@@ -13,7 +13,7 @@ import java.util.Date;
  * 用户优惠券记录表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("market_coupon")

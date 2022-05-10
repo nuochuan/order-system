@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 自定义Map实现，完全兼容java.util.HashMap
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public class JsonMap<K, V> extends HashMap<K, V> {

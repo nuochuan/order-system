@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 日期辅助组件接口
  *
- * @author Noel
+ * @author Noah
  */
 public interface DateProvider {
 

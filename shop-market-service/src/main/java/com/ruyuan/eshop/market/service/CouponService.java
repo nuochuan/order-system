@@ -9,7 +9,7 @@ import com.ruyuan.eshop.market.domain.request.ReleaseUserCouponRequest;
 /**
  * 优惠券管理service接口
  *
- * @author Noel
+ * @author Noah
  */
 public interface CouponService {
 

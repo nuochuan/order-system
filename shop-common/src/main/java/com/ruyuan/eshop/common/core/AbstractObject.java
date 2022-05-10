@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * 基础POJO类
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @SuppressWarnings({"rawtypes", "unchecked"})

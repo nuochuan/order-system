@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * 物流配送结果事件基类
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

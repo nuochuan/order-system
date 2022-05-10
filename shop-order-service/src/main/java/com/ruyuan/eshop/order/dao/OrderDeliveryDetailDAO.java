@@ -17,7 +17,7 @@ import java.util.Objects;
  *  订单配送信息DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class OrderDeliveryDetailDAO extends BaseDAO<OrderDeliveryDetailMapper, OrderDeliveryDetailDO> {

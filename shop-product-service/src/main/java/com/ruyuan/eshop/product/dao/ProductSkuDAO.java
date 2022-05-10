@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * 商品sku记录表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class ProductSkuDAO extends BaseDAO<ProductSkuMapper, ProductSkuDO> {

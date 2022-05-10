@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 订单操作日志表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("order_operate_log")

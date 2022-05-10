@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 售后支付表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface AfterSaleRefundMapper extends BaseMapper<AfterSaleRefundDO> {

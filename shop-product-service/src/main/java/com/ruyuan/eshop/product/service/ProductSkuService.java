@@ -3,7 +3,7 @@ package com.ruyuan.eshop.product.service;
 import com.ruyuan.eshop.product.domain.dto.ProductSkuDTO;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface ProductSkuService {

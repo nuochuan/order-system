@@ -15,7 +15,7 @@ import java.util.List;
  * 订单操作日志表 DAO
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Repository
 public class OrderOperateLogDAO extends BaseDAO<OrderOperateLogMapper, OrderOperateLogDO> {

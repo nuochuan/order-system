@@ -3,7 +3,7 @@ package com.ruyuan.eshop.product.constants;
 /**
  * 商品服务常量
  *
- * @author Noel
+ * @author Noah
  */
 public class ProductConstant {
 

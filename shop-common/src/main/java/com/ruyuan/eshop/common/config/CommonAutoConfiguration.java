@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Configuration

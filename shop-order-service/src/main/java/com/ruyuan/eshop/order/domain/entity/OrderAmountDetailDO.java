@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 订单价格明细表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("order_amount_detail")

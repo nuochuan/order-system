@@ -3,7 +3,7 @@ package com.ruyuan.eshop.market.constants;
 /**
  * 优惠券类型
  *
- * @author Noel
+ * @author Noah
  */
 public class CouponType {
 

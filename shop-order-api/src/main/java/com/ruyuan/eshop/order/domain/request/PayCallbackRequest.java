@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * 支付系统回调请求对象
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 @Data

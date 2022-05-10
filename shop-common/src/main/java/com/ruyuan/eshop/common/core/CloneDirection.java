@@ -3,7 +3,7 @@ package com.ruyuan.eshop.common.core;
 /**
  * 克隆方向枚举
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum CloneDirection {

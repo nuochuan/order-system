@@ -6,7 +6,7 @@ import com.ruyuan.eshop.order.exception.OrderBizException;
 
 /**
  * 订单物流配送结果处理器
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface OrderWmsShipResultProcessor {

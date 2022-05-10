@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 配送方式枚举
  *
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public enum DeliveryTypeEnum {

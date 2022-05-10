@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * spring ioc容器组件
  *
- * @author Noel
+ * @author Noah
  */
 public class SpringApplicationContext {
 

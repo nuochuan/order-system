@@ -2,7 +2,7 @@ package com.ruyuan.eshop.order.manager;
 
 /**
  * 订单号生成manager组件
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface OrderNoManager {

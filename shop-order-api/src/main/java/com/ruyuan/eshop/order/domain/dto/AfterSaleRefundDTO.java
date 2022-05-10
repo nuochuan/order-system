@@ -11,7 +11,7 @@ import java.util.Date;
  * 售后退款单表
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 public class AfterSaleRefundDTO extends AbstractObject implements Serializable {

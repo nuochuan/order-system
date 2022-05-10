@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 地区设置
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Data
 @TableName("area")

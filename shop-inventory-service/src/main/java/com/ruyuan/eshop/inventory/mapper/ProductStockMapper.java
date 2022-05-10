@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * 库存中心的商品库存表 Mapper 接口
  * </p>
  *
- * @author Noel
+ * @author Noah
  */
 @Mapper
 public interface ProductStockMapper extends BaseMapper<ProductStockDO> {

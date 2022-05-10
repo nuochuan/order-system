@@ -6,7 +6,7 @@ import com.ruyuan.eshop.pay.domain.request.PayRefundRequest;
 import com.ruyuan.eshop.pay.domain.request.PayOrderRequest;
 
 /**
- * @author Noel
+ * @author Noah
  * @version 1.0
  */
 public interface PayApi {
