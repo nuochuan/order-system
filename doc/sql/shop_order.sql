@@ -285,13 +285,13 @@ CREATE TABLE `order_snapshot` (
 DROP TABLE IF EXISTS `undo_log`;
 CREATE TABLE `undo_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `branch_id` bigint(20) NOT NULL,
-  `xid` varchar(100) NOT NULL,
-  `context` varchar(128) NOT NULL,
-  `rollback_info` longblob NOT NULL,
-  `log_status` int(11) NOT NULL,
-  `log_created` datetime NOT NULL,
-  `log_modified` datetime NOT NULL,
+  `branch_id` bigint(20) NOT NULL COMMENT '分支事务ID',
+  `xid` varchar(100) NOT NULL COMMENT '全局事务ID',
+  `context` varchar(128) NOT NULL COMMENT '上下文',
+  `rollback_info` longblob NOT NULL COMMENT '回滚日志',
+  `log_status` int(11) NOT NULL COMMENT '日志状态',
+  `log_created` datetime NOT NULL COMMENT '创建时间',
+  `log_modified` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
