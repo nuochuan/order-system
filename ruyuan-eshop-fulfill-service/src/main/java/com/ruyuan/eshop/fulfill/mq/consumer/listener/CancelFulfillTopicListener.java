@@ -45,10 +45,8 @@ public class CancelFulfillTopicListener implements MessageListenerConcurrently {
 
                 //1、取消履约单
                 fulfillService.cancelFulfillOrder(request.getOrderId());
-
                 //2、取消捡货
                 wmsApi.cancelPickGoods(request.getOrderId());
-
                 //3、取消发货
                 tmsApi.cancelSendOut(request.getOrderId());
             }

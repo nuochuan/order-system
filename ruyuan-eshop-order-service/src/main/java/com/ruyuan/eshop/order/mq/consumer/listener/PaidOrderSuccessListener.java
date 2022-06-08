@@ -20,6 +20,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.client.producer.TransactionListener;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
+import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,7 @@ public class PaidOrderSuccessListener implements MessageListenerConcurrently {
                 try {
                     //2、进行订单履约逻辑
                     TransactionMQProducer producer = defaultProducer.getProducer();
+
                     producer.setTransactionListener(new TransactionListener() {
 
                         @Override
@@ -103,6 +105,7 @@ public class PaidOrderSuccessListener implements MessageListenerConcurrently {
                             }
                             return LocalTransactionState.ROLLBACK_MESSAGE;
                         }
+
                     });
 
                     ReceiveFulfillRequest receiveFulfillRequest = orderFulFillService.buildReceiveFulFillRequest(order);
@@ -110,8 +113,11 @@ public class PaidOrderSuccessListener implements MessageListenerConcurrently {
                     String topic = TRIGGER_ORDER_FULFILL_TOPIC;
                     byte[] body = JSON.toJSONString(receiveFulfillRequest).getBytes(StandardCharsets.UTF_8);
                     Message mq = new Message(topic, body);
-                    producer.sendMessageInTransaction(mq, order);
 
+                    TransactionSendResult result = producer.sendMessageInTransaction(mq, order);
+                    if(!result.getLocalTransactionState().equals(LocalTransactionState.COMMIT_MESSAGE)) {
+                        throw new OrderBizException(OrderErrorCodeEnum.ORDER_PAY_CALLBACK_SEND_MQ_ERROR);
+                    }
                 }finally {
                     redisLock.unlock(key);
                 }

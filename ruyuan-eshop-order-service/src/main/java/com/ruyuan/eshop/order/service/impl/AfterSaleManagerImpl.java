@@ -18,6 +18,7 @@ import com.ruyuan.eshop.order.exception.OrderBizException;
 import com.ruyuan.eshop.order.exception.OrderErrorCodeEnum;
 import com.ruyuan.eshop.order.manager.OrderNoManager;
 import com.ruyuan.eshop.order.service.AfterSaleManager;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class AfterSaleManagerImpl implements AfterSaleManager {
     private AfterSaleRefundDAO afterSaleRefundDAO;
 
     @Override
+    @GlobalTransactional(rollbackFor = Exception.class)
     public void cancelOrderFulfillmentAndUpdateOrderStatus(CancelOrderAssembleRequest cancelOrderAssembleRequest) {
         // 履约取消
         cancelFulfill(cancelOrderAssembleRequest);

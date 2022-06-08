@@ -116,13 +116,12 @@ public class CouponServiceImpl implements CouponService {
         String userId = releaseUserCouponRequest.getUserId();
         String couponId = releaseUserCouponRequest.getCouponId();
         CouponDO couponAchieve = couponDAO.getUserCoupon(userId, couponId);
-        if (CouponUsedStatusEnum.UN_USED.getCode().equals(couponAchieve.getUsed())) {
-            log.info("当前用户未使用优惠券,不用回退,userId:{},couponId:{}", userId, couponId);
-            return true;
-        }
         couponAchieve.setUsed(CouponUsedStatusEnum.UN_USED.getCode());
         couponAchieve.setUsedTime(null);
         couponDAO.updateById(couponAchieve);
         return true;
     }
+
+
+
 }

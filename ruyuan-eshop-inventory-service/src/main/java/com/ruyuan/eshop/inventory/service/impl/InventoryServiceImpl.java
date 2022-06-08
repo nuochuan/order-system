@@ -95,7 +95,7 @@ public class InventoryServiceImpl implements InventoryService {
             }
 
             //3、添加redis锁，防并发
-            String lockKey = MessageFormat.format(RedisLockKeyConstants.RELEASE_PRODUCT_STOCK_KEY,orderId,skuCode);
+            String lockKey = MessageFormat.format(RedisLockKeyConstants.DEDUCT_PRODUCT_STOCK_KEY,orderId,skuCode);
             Boolean locked = redisLock.lock(lockKey);
             if(!locked) {
                 log.error("无法获取扣减库存锁,orderId={},skuCode={}",orderId,skuCode);

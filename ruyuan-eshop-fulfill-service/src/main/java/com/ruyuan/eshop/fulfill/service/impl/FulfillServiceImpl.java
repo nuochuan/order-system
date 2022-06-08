@@ -3,7 +3,6 @@ package com.ruyuan.eshop.fulfill.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.ruyuan.eshop.common.bean.SpringApplicationContext;
 import com.ruyuan.eshop.common.constants.RedisLockKeyConstants;
-import com.ruyuan.eshop.common.core.JsonResult;
 import com.ruyuan.eshop.common.redis.RedisLock;
 import com.ruyuan.eshop.common.utils.RandomUtil;
 import com.ruyuan.eshop.fulfill.builder.FulfillDataBuilder;
@@ -21,7 +20,9 @@ import io.seata.saga.statelang.domain.StateMachineInstance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class FulfillServiceImpl implements FulfillService {
     }
 
     @Override
+    @Transactional
     public void cancelFulfillOrder(String orderId) {
         //1、查询履约单
         OrderFulfillDO orderFulfill = orderFulfillDAO.getOne(orderId);
@@ -77,10 +79,16 @@ public class FulfillServiceImpl implements FulfillService {
             List<OrderFulfillItemDO> fulfillItems = orderFulfillItemDAO
                     .listByFulfillId(orderFulfill.getFulfillId());
 
+            List<Long> itemIds = new ArrayList<Long>();
+
             //4、移除履约单条目
             for(OrderFulfillItemDO item : fulfillItems) {
                 orderFulfillItemDAO.removeById(item.getId());
+                itemIds.add(item.getId());
             }
+
+            // orderFulfillItemDAO.removeByIds(itemIds);
+            // delete from table where id in (xx,xx,xx,xx)
         }
     }
 
@@ -112,7 +120,6 @@ public class FulfillServiceImpl implements FulfillService {
                 log.info("该订单已履约！！！,orderId={}",request.getOrderId());
                 return true;
             }
-
 
             //2、saga状态机，触发wms捡货和tms发货
             StateMachineEngine stateMachineEngine = (StateMachineEngine) springApplicationContext

@@ -143,6 +143,7 @@ public class AfterSaleApiImpl implements AfterSaleApi {
             }
             //  4、组装释放库存参数
             AuditPassReleaseAssetsRequest auditPassReleaseAssetsRequest = buildAuditPassReleaseAssets(afterSaleItemDO, customerAuditAssembleResult, orderId);
+
             //  5、组装事务MQ消息
             TransactionMQProducer producer = defaultProducer.getProducer();
             producer.setTransactionListener(new TransactionListener() {

@@ -2,7 +2,6 @@ package com.ruyuan.eshop.fulfill.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruyuan.eshop.common.bean.SpringApplicationContext;
-import com.ruyuan.eshop.common.constants.RocketMqConstant;
 import com.ruyuan.eshop.common.core.JsonResult;
 import com.ruyuan.eshop.common.enums.OrderStatusChangeEnum;
 import com.ruyuan.eshop.fulfill.api.FulfillApi;
@@ -16,7 +15,10 @@ import com.ruyuan.eshop.fulfill.service.OrderWmsShipEventProcessor;
 import com.ruyuan.eshop.fulfill.service.impl.OrderDeliveredWmsEventProcessor;
 import com.ruyuan.eshop.fulfill.service.impl.OrderOutStockWmsEventProcessor;
 import com.ruyuan.eshop.fulfill.service.impl.OrderSignedWmsEventProcessor;
+import com.ruyuan.eshop.tms.api.TmsApi;
+import com.ruyuan.eshop.wms.api.WmsApi;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +38,12 @@ public class FulfillApiImpl implements FulfillApi {
 
     @Autowired
     private FulfillService fulfillService;
+
+    @DubboReference(version = "1.0.0", retries = 0)
+    private WmsApi wmsApi;
+
+    @DubboReference(version = "1.0.0", retries = 0)
+    private TmsApi tmsApi;
 
 
     @Override
@@ -73,9 +81,12 @@ public class FulfillApiImpl implements FulfillApi {
     public JsonResult<Boolean> cancelFulfill(CancelFulfillRequest cancelFulfillRequest) {
         log.info("取消履约：request={}",JSONObject.toJSONString(cancelFulfillRequest));
 
-        //发送取消履约消息
-        defaultProducer.sendMessage(RocketMqConstant.CANCEL_FULFILL_TOPIC,
-               JSONObject.toJSONString(cancelFulfillRequest), "取消履约");
+        //1、取消履约单
+        fulfillService.cancelFulfillOrder(cancelFulfillRequest.getOrderId());
+        //2、取消捡货
+        wmsApi.cancelPickGoods(cancelFulfillRequest.getOrderId());
+        //3、取消发货
+        tmsApi.cancelSendOut(cancelFulfillRequest.getOrderId());
 
         return JsonResult.buildSuccess(true);
     }

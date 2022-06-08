@@ -3,6 +3,7 @@ package com.ruyuan.eshop.order.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.ruyuan.eshop.common.constants.RocketMqConstant;
 import com.ruyuan.eshop.common.core.JsonResult;
+import com.ruyuan.eshop.common.exception.BaseBizException;
 import com.ruyuan.eshop.common.message.ActualRefundMessage;
 import com.ruyuan.eshop.common.utils.ExtJsonUtil;
 import com.ruyuan.eshop.order.enums.AfterSaleStatusEnum;
@@ -27,10 +28,17 @@ import com.ruyuan.eshop.product.domain.dto.ProductSkuDTO;
 import com.ruyuan.eshop.product.domain.query.ProductSkuQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.rocketmq.client.producer.LocalTransactionState;
+import org.apache.rocketmq.client.producer.TransactionListener;
+import org.apache.rocketmq.client.producer.TransactionMQProducer;
+import org.apache.rocketmq.client.producer.TransactionSendResult;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,7 +115,6 @@ public class OrderLackServiceImpl implements OrderLackService {
         return false;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public LackDTO executeLackRequest(LackRequest request, CheckLackDTO checkLackItemDTO) {
         OrderInfoDO order = checkLackItemDTO.getOrder();
@@ -135,18 +142,66 @@ public class OrderLackServiceImpl implements OrderLackService {
         OrderExtJsonDTO lackExtJson = buildOrderLackExtJson(request, order, lackAfterSaleOrder);
 
         //6、存储售后单,item和退款单;
+        TransactionMQProducer transactionMQProducer = defaultProducer.getProducer();
+
+        transactionMQProducer.setTransactionListener(new TransactionListener() {
+
+            @Override
+            public LocalTransactionState executeLocalTransaction(Message message, Object o) {
+                try {
+                    saveAfterSaleData(lackAfterSaleOrder, afterSaleItems, afterSaleRefund, order, lackExtJson);
+                    return LocalTransactionState.COMMIT_MESSAGE;
+                } catch (BaseBizException e) {
+                    throw e;
+                } catch (Exception e) {
+                    log.error("system error", e);
+                    return LocalTransactionState.ROLLBACK_MESSAGE;
+                }
+
+            }
+
+            @Override
+            public LocalTransactionState checkLocalTransaction(MessageExt messageExt) {
+                AfterSaleInfoDO afterSaleInfoDO = afterSaleInfoDAO.getOneByOrderId(Long.valueOf(order.getOrderId()));
+                if(afterSaleInfoDO != null) {
+                    return LocalTransactionState.COMMIT_MESSAGE;
+                }
+                return LocalTransactionState.ROLLBACK_MESSAGE;
+            }
+
+        });
+
+        //7、发送缺品退款的消息
+        ActualRefundMessage actualRefundMessage = new ActualRefundMessage();
+        actualRefundMessage.setAfterSaleRefundId(afterSaleRefund.getId());
+        actualRefundMessage.setOrderId(order.getOrderId());
+        actualRefundMessage.setAfterSaleId(lackAfterSaleOrder.getAfterSaleId());
+
+        Message msg = new Message(RocketMqConstant.ACTUAL_REFUND_TOPIC,
+                JSONObject.toJSONString(actualRefundMessage).getBytes(StandardCharsets.UTF_8));
+
+        try {
+            TransactionSendResult result = transactionMQProducer.sendMessageInTransaction(msg, actualRefundMessage);
+            if(!result.getLocalTransactionState().equals(LocalTransactionState.COMMIT_MESSAGE)) {
+                throw new OrderBizException(OrderErrorCodeEnum.ORDER_PAY_CALLBACK_SEND_MQ_ERROR);
+            }
+        } catch(Exception e) {
+            throw new OrderBizException(OrderErrorCodeEnum.ORDER_PAY_CALLBACK_SEND_MQ_ERROR);
+        }
+
+        return new LackDTO(order.getOrderId(), lackAfterSaleOrder.getAfterSaleId());
+    }
+
+    @Transactional
+    private void saveAfterSaleData(AfterSaleInfoDO lackAfterSaleOrder,
+                                   List<AfterSaleItemDO> afterSaleItems,
+                                   AfterSaleRefundDO afterSaleRefund,
+                                   OrderInfoDO order,
+                                   OrderExtJsonDTO lackExtJson) {
         afterSaleInfoDAO.save(lackAfterSaleOrder);
         afterSaleItemDAO.saveBatch(afterSaleItems);
         afterSaleRefundDAO.save(afterSaleRefund);
-        //   更新订单扩展信息
         orderInfoDAO.updateOrderExtJson(order.getOrderId(), lackExtJson);
-
-        //7、发送缺品退款的消息
-        sendLackRefund(order, lackAfterSaleOrder, afterSaleRefund.getId());
-
-        //todo 二期：使用rocketmq 事务消息保证本地事务+发送缺品退款消息的最终一致性
-
-        return new LackDTO(order.getOrderId(), lackAfterSaleOrder.getAfterSaleId());
     }
 
     /**
@@ -168,18 +223,6 @@ public class OrderLackServiceImpl implements OrderLackService {
         orderExtJson.setLackInfo(lackInfo);
 
         return orderExtJson;
-    }
-
-    /**
-     * 发送缺品退款请求
-     */
-    private void sendLackRefund(OrderInfoDO order, AfterSaleInfoDO afterSaleInfo, Long afterSaleRefundId) {
-        ActualRefundMessage actualRefundMessage = new ActualRefundMessage();
-        actualRefundMessage.setAfterSaleRefundId(afterSaleRefundId);
-        actualRefundMessage.setOrderId(order.getOrderId());
-        actualRefundMessage.setAfterSaleId(afterSaleInfo.getAfterSaleId());
-
-        defaultProducer.sendMessage(RocketMqConstant.ACTUAL_REFUND_TOPIC, JSONObject.toJSONString(actualRefundMessage), "实际退款");
     }
 
     /**

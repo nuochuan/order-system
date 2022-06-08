@@ -102,7 +102,6 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
      * 取消订单/超时未支付取消
      */
     @Override
-    @GlobalTransactional(rollbackFor = Exception.class)
     public JsonResult<Boolean> cancelOrder(CancelOrderRequest cancelOrderRequest) {
         //  入参检查
         checkCancelOrderRequestParam(cancelOrderRequest);
@@ -134,6 +133,7 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
         }
 
         TransactionMQProducer producer = defaultProducer.getProducer();
+
         producer.setTransactionListener(new TransactionListener() {
             @Override
             public LocalTransactionState executeLocalTransaction(Message message, Object o) {
@@ -400,6 +400,7 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
             cancelOrderAssembleRequest.setCancelOrderRefundAmountDTO(cancelOrderRefundAmountDTO);
 
             TransactionMQProducer producer = defaultProducer.getProducer();
+
             producer.setTransactionListener(new TransactionListener() {
                 @Override
                 public LocalTransactionState executeLocalTransaction(Message message, Object o) {
@@ -476,6 +477,7 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
             if (!lock) {
                 throw new OrderBizException(OrderErrorCodeEnum.REFUND_MONEY_REPEAT);
             }
+
             AfterSaleInfoDO afterSaleInfoDO = afterSaleInfoDAO.getOneByAfterSaleId(actualRefundMessage.getAfterSaleId());
             AfterSaleRefundDO afterSaleRefundDO = afterSaleRefundDAO.findOrderAfterSaleStatus(String.valueOf(afterSaleId));
 
@@ -595,23 +597,51 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
             }
 
             // 2、封装数据
-            ReturnGoodsAssembleRequest returnGoodsAssembleRequest = buildReturnGoodsData(returnGoodsOrderRequest);
-
             // 3、计算退货金额
-            returnGoodsAssembleRequest = calculateReturnGoodsAmount(returnGoodsAssembleRequest);
+            ReturnGoodsAssembleRequest returnGoodsAssembleRequest = calculateReturnGoodsAmount(
+                    buildReturnGoodsData(returnGoodsOrderRequest));
 
-            // 4、售后数据落库
-            insertReturnGoodsAfterSale(returnGoodsAssembleRequest, AfterSaleStatusEnum.COMMITED.getCode());
+            TransactionMQProducer transactionMQProducer = defaultProducer.getProducer();
+
+            transactionMQProducer.setTransactionListener(new TransactionListener() {
+
+                @Override
+                public LocalTransactionState executeLocalTransaction(Message message, Object o) {
+                    try {
+                        // 4、售后数据落库
+                        insertReturnGoodsAfterSale(returnGoodsAssembleRequest, AfterSaleStatusEnum.COMMITED.getCode());
+                        return LocalTransactionState.COMMIT_MESSAGE;
+                    } catch (BaseBizException e) {
+                        throw e;
+                    } catch (Exception e) {
+                        log.error("system error", e);
+                        return LocalTransactionState.ROLLBACK_MESSAGE;
+                    }
+
+                }
+
+                @Override
+                public LocalTransactionState checkLocalTransaction(MessageExt messageExt) {
+                    AfterSaleInfoDO afterSaleInfoDO = afterSaleInfoDAO.getOneByOrderId(Long.valueOf(orderId));
+                    if(afterSaleInfoDO != null) {
+                        return LocalTransactionState.COMMIT_MESSAGE;
+                    }
+                    return LocalTransactionState.ROLLBACK_MESSAGE;
+                }
+
+            });
 
             // 5、发起客服审核
             CustomerReceiveAfterSaleRequest customerReceiveAfterSaleRequest
                     = returnGoodsAssembleRequest.clone(new CustomerReceiveAfterSaleRequest());
+            Message msg = new Message(RocketMqConstant.AFTER_SALE_CUSTOMER_AUDIT_TOPIC,
+                    JSONObject.toJSONString(customerReceiveAfterSaleRequest).getBytes(StandardCharsets.UTF_8));
 
-            defaultProducer.sendMessage(RocketMqConstant.AFTER_SALE_CUSTOMER_AUDIT_TOPIC,
-                    JSONObject.toJSONString(customerReceiveAfterSaleRequest), "售后申请发送给客服审核");
-
-
-        } catch (BaseBizException e) {
+            TransactionSendResult result = transactionMQProducer.sendMessageInTransaction(msg, returnGoodsAssembleRequest);
+            if(!result.getLocalTransactionState().equals(LocalTransactionState.COMMIT_MESSAGE)) {
+                throw new OrderBizException(OrderErrorCodeEnum.ORDER_PAY_CALLBACK_SEND_MQ_ERROR);
+            }
+        } catch (Exception e) {
             log.error("system error", e);
             return JsonResult.buildError(e.getMessage());
         }
@@ -638,6 +668,7 @@ public class OrderAfterSaleServiceImpl implements OrderAfterSaleService {
 
     }
 
+    @Transactional
     private void insertReturnGoodsAfterSale(ReturnGoodsAssembleRequest returnGoodsAssembleRequest, Integer afterSaleStatus) {
         OrderInfoDTO orderInfoDTO = returnGoodsAssembleRequest.getOrderInfoDTO();
         OrderInfoDO orderInfoDO = orderInfoDTO.clone(OrderInfoDO.class);
