@@ -3,6 +3,7 @@ package com.ruyuan.eshop.order.mq.consumer.listener;
 import com.alibaba.fastjson.JSON;
 import com.ruyuan.eshop.common.enums.OrderStatusEnum;
 import com.ruyuan.eshop.common.message.PayOrderTimeoutDelayMessage;
+import com.ruyuan.eshop.common.mq.AbstractMessageListenerConcurrently;
 import com.ruyuan.eshop.order.dao.OrderInfoDAO;
 import com.ruyuan.eshop.order.domain.entity.OrderInfoDO;
 import com.ruyuan.eshop.order.domain.request.CancelOrderRequest;
@@ -10,7 +11,6 @@ import com.ruyuan.eshop.order.service.OrderAfterSaleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,12 +20,13 @@ import java.util.List;
 
 /**
  * 监听 支付订单超时延迟消息
+ *
  * @author Noah
  * @version 1.0
  */
 @Slf4j
 @Component
-public class PayOrderTimeoutListener implements MessageListenerConcurrently {
+public class PayOrderTimeoutListener extends AbstractMessageListenerConcurrently {
 
     @Autowired
     private OrderAfterSaleService orderAfterSaleService;
@@ -34,7 +35,7 @@ public class PayOrderTimeoutListener implements MessageListenerConcurrently {
     private OrderInfoDAO orderInfoDAO;
 
     @Override
-    public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
+    public ConsumeConcurrentlyStatus onMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
         try {
             for (MessageExt messageExt : list) {
                 String message = new String(messageExt.getBody());
@@ -50,6 +51,10 @@ public class PayOrderTimeoutListener implements MessageListenerConcurrently {
 
                 //  查询当前数据库的订单实时状态
                 OrderInfoDO orderInfoDO = orderInfoDAO.getByOrderId(payOrderTimeoutDelayMessage.getOrderId());
+                if (orderInfoDO == null) {
+                    log.warn("订单不存在，orderId:{}", cancelOrderRequest.getOrderId());
+                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                }
                 Integer orderStatusDatabase = orderInfoDO.getOrderStatus();
                 if (!OrderStatusEnum.CREATED.getCode().equals(orderStatusDatabase)) {
                     //  订单实时状态不等于已创建

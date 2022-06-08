@@ -61,7 +61,7 @@ public class AfterSaleController {
         //  分布式锁
         String orderId = returnGoodsOrderRequest.getOrderId();
         String key = RedisLockKeyConstants.REFUND_KEY + orderId;
-        boolean lock = redisLock.lock(key);
+        boolean lock = redisLock.tryLock(key);
         if (!lock) {
             throw new OrderBizException(OrderErrorCodeEnum.PROCESS_AFTER_SALE_RETURN_GOODS);
         }
@@ -75,9 +75,9 @@ public class AfterSaleController {
     /**
      * 缺品请求
      */
-    @PostMapping("/lockItem")
-    public JsonResult<LackDTO> lockItem(@RequestBody LackRequest request) {
-        JsonResult<LackDTO> result = afterSaleApi.lockItem(request);
+    @PostMapping("/lackItem")
+    public JsonResult<LackDTO> lackItem(@RequestBody LackRequest request) {
+        JsonResult<LackDTO> result = afterSaleApi.lackItem(request);
         return result;
     }
 

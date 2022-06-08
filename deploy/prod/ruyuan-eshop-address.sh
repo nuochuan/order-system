@@ -50,7 +50,7 @@ health_check() {
 }
 start_application() {
     echo "starting java process"
-    nohup java -server -Xms1024m -Xmx1024m -jar ${JAR_NAME} --spring.profiles.active=prod > ${JAVA_OUT} 2>&1 &
+    nohup java -server -Xms1024m -Xmx1024m -jar ${JAR_NAME} --spring.cloud.nacos.config.server-addr=172.19.215.83:8848 --spring.profiles.active=prod > ${JAVA_OUT} 2>&1 &
     echo "started java process " $?
 }
 

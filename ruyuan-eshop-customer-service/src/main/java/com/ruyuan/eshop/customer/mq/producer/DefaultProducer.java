@@ -1,14 +1,15 @@
 package com.ruyuan.eshop.customer.mq.producer;
 
 import com.ruyuan.eshop.common.constants.RocketMqConstant;
+import com.ruyuan.eshop.common.mq.MQMessage;
 import com.ruyuan.eshop.customer.exception.CustomerBizException;
 import com.ruyuan.eshop.customer.exception.CustomerErrorCodeEnum;
-import com.ruyuan.eshop.customer.mq.config.RocketMQProperties;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class DefaultProducer {
      * @param message 消息
      */
     public void sendMessage(String topic, String message, Integer delayTimeLevel, String type) {
-        Message msg = new Message(topic, message.getBytes(StandardCharsets.UTF_8));
+        Message msg = new MQMessage(topic, message.getBytes(StandardCharsets.UTF_8));
         try {
             if (delayTimeLevel > 0) {
                 msg.setDelayTimeLevel(delayTimeLevel);

@@ -5,15 +5,19 @@ import com.ruyuan.eshop.common.core.JsonResult;
 import com.ruyuan.eshop.common.utils.ParamCheckUtil;
 import com.ruyuan.eshop.product.api.ProductApi;
 import com.ruyuan.eshop.product.domain.dto.ProductSkuDTO;
-import com.ruyuan.eshop.product.domain.query.ProductSkuQuery;
+import com.ruyuan.eshop.product.domain.query.GetProductSkuQuery;
+import com.ruyuan.eshop.product.domain.query.ListProductSkuQuery;
 import com.ruyuan.eshop.product.exception.ProductBizException;
 import com.ruyuan.eshop.product.service.ProductSkuService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * 商品中心-商品信息
+ *
  * @author Noah
  * @version 1.0
  */
@@ -25,19 +29,39 @@ public class ProductApiImpl implements ProductApi {
     private ProductSkuService productSkuService;
 
     @Override
-    public JsonResult<ProductSkuDTO> getProductSku(ProductSkuQuery productSkuQuery) {
+    public JsonResult<ProductSkuDTO> getProductSku(GetProductSkuQuery productSkuQuery) {
         try {
             ParamCheckUtil.checkObjectNonNull(productSkuQuery);
             String skuCode = productSkuQuery.getSkuCode();
+            ParamCheckUtil.checkStringNonEmpty(skuCode);
 
             ProductSkuDTO productSkuDTO = productSkuService.getProductSkuByCode(skuCode);
             log.info("productSkuDTO={},productSkuQuery={}"
-                    , JSONObject.toJSONString(productSkuDTO),JSONObject.toJSONString(productSkuQuery));
+                    , JSONObject.toJSONString(productSkuDTO), JSONObject.toJSONString(productSkuQuery));
             return JsonResult.buildSuccess(productSkuDTO);
-        } catch(ProductBizException e) {
+        } catch (ProductBizException e) {
             log.error("biz error", e);
             return JsonResult.buildError(e.getErrorCode(), e.getErrorMsg());
-        } catch(Exception e) {
+        } catch (Exception e) {
+            log.error("system error", e);
+            return JsonResult.buildError(e.getMessage());
+        }
+    }
+
+    @Override
+    public JsonResult<List<ProductSkuDTO>> listProductSku(ListProductSkuQuery productSkuQuery) {
+        try {
+            ParamCheckUtil.checkObjectNonNull(productSkuQuery);
+            List<String> skuCodeList = productSkuQuery.getSkuCodeList();
+
+            List<ProductSkuDTO> productSkuDTOList = productSkuService.listProductSkuByCode(skuCodeList);
+            log.info("productSkuDTO={},productSkuQuery={}"
+                    , JSONObject.toJSONString(productSkuDTOList), JSONObject.toJSONString(productSkuQuery));
+            return JsonResult.buildSuccess(productSkuDTOList);
+        } catch (ProductBizException e) {
+            log.error("biz error", e);
+            return JsonResult.buildError(e.getErrorCode(), e.getErrorMsg());
+        } catch (Exception e) {
             log.error("system error", e);
             return JsonResult.buildError(e.getMessage());
         }

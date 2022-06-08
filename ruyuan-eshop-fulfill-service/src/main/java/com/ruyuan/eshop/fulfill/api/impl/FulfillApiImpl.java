@@ -9,16 +9,14 @@ import com.ruyuan.eshop.fulfill.domain.request.CancelFulfillRequest;
 import com.ruyuan.eshop.fulfill.domain.request.ReceiveFulfillRequest;
 import com.ruyuan.eshop.fulfill.domain.request.TriggerOrderWmsShipEventRequest;
 import com.ruyuan.eshop.fulfill.exception.FulfillBizException;
-import com.ruyuan.eshop.fulfill.mq.producer.DefaultProducer;
+import com.ruyuan.eshop.fulfill.remote.TmsRemote;
+import com.ruyuan.eshop.fulfill.remote.WmsRemote;
 import com.ruyuan.eshop.fulfill.service.FulfillService;
 import com.ruyuan.eshop.fulfill.service.OrderWmsShipEventProcessor;
 import com.ruyuan.eshop.fulfill.service.impl.OrderDeliveredWmsEventProcessor;
 import com.ruyuan.eshop.fulfill.service.impl.OrderOutStockWmsEventProcessor;
 import com.ruyuan.eshop.fulfill.service.impl.OrderSignedWmsEventProcessor;
-import com.ruyuan.eshop.tms.api.TmsApi;
-import com.ruyuan.eshop.wms.api.WmsApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,16 +32,13 @@ public class FulfillApiImpl implements FulfillApi {
     private SpringApplicationContext springApplicationContext;
 
     @Autowired
-    private DefaultProducer defaultProducer;
-
-    @Autowired
     private FulfillService fulfillService;
 
-    @DubboReference(version = "1.0.0", retries = 0)
-    private WmsApi wmsApi;
+    @Autowired
+    private TmsRemote tmsRemote;
 
-    @DubboReference(version = "1.0.0", retries = 0)
-    private TmsApi tmsApi;
+    @Autowired
+    private WmsRemote wmsRemote;
 
 
     @Override
@@ -69,7 +64,7 @@ public class FulfillApiImpl implements FulfillApi {
         OrderWmsShipEventProcessor processor = getWmsShipEventProcessor(orderStatusChange);
 
         //2、执行
-        if(null != processor) {
+        if (null != processor) {
             processor.execute(request);
         }
 
@@ -79,20 +74,23 @@ public class FulfillApiImpl implements FulfillApi {
 
     @Override
     public JsonResult<Boolean> cancelFulfill(CancelFulfillRequest cancelFulfillRequest) {
-        log.info("取消履约：request={}",JSONObject.toJSONString(cancelFulfillRequest));
+        log.info("取消履约：request={}", JSONObject.toJSONString(cancelFulfillRequest));
 
         //1、取消履约单
         fulfillService.cancelFulfillOrder(cancelFulfillRequest.getOrderId());
+
         //2、取消捡货
-        wmsApi.cancelPickGoods(cancelFulfillRequest.getOrderId());
+        wmsRemote.cancelPickGoods(cancelFulfillRequest.getOrderId());
+
         //3、取消发货
-        tmsApi.cancelSendOut(cancelFulfillRequest.getOrderId());
+        tmsRemote.cancelSendOut(cancelFulfillRequest.getOrderId());
 
         return JsonResult.buildSuccess(true);
     }
 
     /**
      * 订单物流配送结果处理器
+     *
      * @param orderStatusChange
      * @return
      */

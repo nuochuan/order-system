@@ -50,7 +50,7 @@ health_check() {
 }
 start_application() {
     echo "starting java process"
-    nohup java -server -Xms1024m -Xmx1024m -javaagent:../../agent/skywalking-agent.jar -DSW_AGENT_COLLECTOR_BACKEND_SERVICES=139.224.50.90:11800 -DSW_AGENT_NAME=${APP_NAME} -jar ${JAR_NAME} --spring.profiles.active=test > ${JAVA_OUT} 2>&1 &
+    nohup java -server -Xms6g -Xmx6g -Xss256k -XX:MetaspaceSize=256m -XX:NewRatio=2 -XX:+PrintTenuringDistribution -XX:+PrintHeapAtGC -XX:+UseConcMarkSweepGC -XX:+UseParNewGC  -XX:+UseCMSCompactAtFullCollection  -XX:CMSFullGCsBeforeCompaction=5 -XX:CMSInitiatingOccupancyFraction=70 -XX:+CMSClassUnloadingEnabled -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:/home/admin/application/gc-%t-%p.log -XX:+HeapDumpBeforeFullGC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/admin/application/ -XX:+PrintClassHistogramBeforeFullGC -XX:+PrintClassHistogramAfterFullGC -XX:ErrorFile=/home/admin/application/hs_err_pid%p.log -javaagent:../../agent/skywalking-agent.jar -Dskywalking.collector.backend_service=172.19.16.67:11800 -Dskywalking.agent.service_name=${APP_NAME} -Dskywalking.trace.ignore_path=/actuator/** -jar ${JAR_NAME} --spring.cloud.nacos.config.server-addr=172.19.16.47:8848 --spring.profiles.active=test > ${JAVA_OUT} 2>&1 &
     echo "started java process"
 }
 

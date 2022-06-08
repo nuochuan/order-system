@@ -1,5 +1,6 @@
 package com.ruyuan.eshop.common.redis;
 
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Noah
  */
+@Slf4j
 public class RedisLock {
 
     RedissonClient redissonClient;
@@ -27,7 +29,7 @@ public class RedisLock {
      * @param key
      * @param seconds
      */
-    public boolean lock(String key, int seconds) {
+    public boolean tryLock(String key, int seconds) {
         RLock rLock = redissonClient.getLock(key);
         try {
             return rLock.tryLock(seconds, TimeUnit.SECONDS);
@@ -41,9 +43,11 @@ public class RedisLock {
      *
      * @param key
      */
-    public boolean lock(String key) {
+    public boolean tryLock(String key) {
         RLock rLock = redissonClient.getLock(key);
-        return rLock.tryLock();
+        boolean locked = rLock.tryLock();
+        log.info("tryLock: key={},locked={}",key,locked);
+        return locked;
     }
 
     /**
@@ -55,6 +59,7 @@ public class RedisLock {
         RLock rLock = redissonClient.getLock(key);
         if (rLock.isLocked()) {
             rLock.unlock();
+            log.info("unlock: key={}",key);
         }
     }
 

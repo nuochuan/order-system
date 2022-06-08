@@ -1,8 +1,9 @@
 package com.ruyuan.eshop.market.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ruyuan.eshop.common.utils.ParamCheckUtil;
-import com.ruyuan.eshop.market.dao.CouponDAO;
 import com.ruyuan.eshop.market.dao.CouponConfigDAO;
+import com.ruyuan.eshop.market.dao.CouponDAO;
 import com.ruyuan.eshop.market.domain.dto.UserCouponDTO;
 import com.ruyuan.eshop.market.domain.entity.CouponConfigDO;
 import com.ruyuan.eshop.market.domain.entity.CouponDO;
@@ -65,6 +66,7 @@ public class CouponServiceImpl implements CouponService {
         userCouponDTO.setConditionAmount(couponConfigDO.getConditionAmount());
         userCouponDTO.setValidStartTime(couponConfigDO.getValidStartTime());
         userCouponDTO.setValidEndTime(couponConfigDO.getValidEndTime());
+        userCouponDTO.setUsed(couponDO.getUsed());
         return userCouponDTO;
     }
 
@@ -77,6 +79,7 @@ public class CouponServiceImpl implements CouponService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean lockUserCoupon(LockUserCouponRequest lockUserCouponRequest) {
+        log.info("lockUserCoupon->request={}", JSONObject.toJSONString(lockUserCouponRequest));
         // 检查入参
         checkLockUserCouponRequest(lockUserCouponRequest);
 
@@ -93,6 +96,7 @@ public class CouponServiceImpl implements CouponService {
         couponDO.setUsed(CouponUsedStatusEnum.USED.getCode());
         couponDO.setUsedTime(new Date());
         couponDAO.updateById(couponDO);
+        log.info("lockUserCoupon->response={}", true);
         return true;
     }
 
@@ -116,12 +120,13 @@ public class CouponServiceImpl implements CouponService {
         String userId = releaseUserCouponRequest.getUserId();
         String couponId = releaseUserCouponRequest.getCouponId();
         CouponDO couponAchieve = couponDAO.getUserCoupon(userId, couponId);
+        if (CouponUsedStatusEnum.UN_USED.getCode().equals(couponAchieve.getUsed())) {
+            log.info("当前用户未使用优惠券,不用回退,userId:{},couponId:{}", userId, couponId);
+            return true;
+        }
         couponAchieve.setUsed(CouponUsedStatusEnum.UN_USED.getCode());
         couponAchieve.setUsedTime(null);
         couponDAO.updateById(couponAchieve);
         return true;
     }
-
-
-
 }

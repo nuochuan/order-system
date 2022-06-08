@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ruyuan.eshop.common.constants.RocketMqConstant;
 import com.ruyuan.eshop.common.enums.OrderStatusChangeEnum;
 import com.ruyuan.eshop.common.message.OrderEvent;
+import com.ruyuan.eshop.common.mq.MQMessage;
 import com.ruyuan.eshop.fulfill.domain.request.TriggerOrderWmsShipEventRequest;
 import com.ruyuan.eshop.fulfill.mq.producer.DefaultProducer;
 import com.ruyuan.eshop.fulfill.service.OrderWmsShipEventProcessor;
@@ -19,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- *
  * @author Noah
  * @version 1.0
  */
@@ -39,7 +39,7 @@ public abstract class AbstractWmsShipEventProcessor implements OrderWmsShipEvent
         String body = buildMsgBody(request);
 
         //3、发送消息
-        sendMessage(body,request.getOrderId());
+        sendMessage(body, request.getOrderId());
     }
 
     /**
@@ -49,9 +49,9 @@ public abstract class AbstractWmsShipEventProcessor implements OrderWmsShipEvent
 
     protected abstract String buildMsgBody(TriggerOrderWmsShipEventRequest request);
 
-    private void sendMessage(String body,String orderId) {
-        if(StringUtils.isNotBlank(body)) {
-            Message message = new Message();
+    private void sendMessage(String body, String orderId) {
+        if (StringUtils.isNotBlank(body)) {
+            Message message = new MQMessage();
             message.setTopic(RocketMqConstant.ORDER_WMS_SHIP_RESULT_TOPIC);
             message.setBody(body.getBytes(StandardCharsets.UTF_8));
             try {
@@ -88,6 +88,7 @@ public abstract class AbstractWmsShipEventProcessor implements OrderWmsShipEvent
 
     /**
      * hash
+     *
      * @param orderId
      * @return
      */

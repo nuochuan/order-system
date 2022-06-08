@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author Noah
- *
  */
 @Repository
 public class FreightTemplateDAO extends BaseDAO<FreightTemplateMapper, FreightTemplateDO> {
