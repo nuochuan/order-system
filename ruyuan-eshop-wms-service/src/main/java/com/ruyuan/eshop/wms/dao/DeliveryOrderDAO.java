@@ -13,7 +13,7 @@ import java.util.List;
  * 出库单 DAO
  * </p>
  *
- * @author Noah
+ * @author zhonghuashishan
  */
 @Repository
 public class DeliveryOrderDAO extends BaseDAO<DeliveryOrderMapper, DeliveryOrderDO> {

@@ -126,7 +126,7 @@ public class MarketServiceImpl implements MarketService {
 
             // 优惠券抵扣金额
             CalculateOrderAmountDTO.OrderAmountDetailDTO couponDiscountAmountDetail = null;
-            if(discountAmount > 0) {
+            if (discountAmount > 0) {
                 if (++index < totalNum) {
                     // 订单条目分摊的优惠金额
                     double partDiscountAmount = Integer.valueOf(discountAmount
@@ -157,7 +157,7 @@ public class MarketServiceImpl implements MarketService {
 
             // 实付金额
             Integer realPayAmount = originPayAmountDetail.getAmount();
-            if(couponDiscountAmountDetail != null) {
+            if (couponDiscountAmountDetail != null) {
                 realPayAmount = realPayAmount - couponDiscountAmountDetail.getAmount();
             }
             CalculateOrderAmountDTO.OrderAmountDetailDTO realPayAmountDetail =

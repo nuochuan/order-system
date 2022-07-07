@@ -221,5 +221,10 @@ public class CreateOrderRequest implements Serializable {
          */
         private Integer accountType;
 
+        /**
+         * 支付金额
+         */
+        private Integer payAmount;
+
     }
 }
